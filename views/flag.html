@@ -1,0 +1,41 @@
+@{layout('layout_admin')}
+
+<section>
+  <h2>Ingresa las bandera encontrada</h2>
+  <form id="form-flag" data-url="/api/v1/flag" method="post">
+    <input type="text" name="flag" placeholder="mio2djr2i4ok" value="">
+    <button type="submit">Registrar Bandera</button>
+    <div class="error-wrapper">
+      <span class="error"></span>
+    </div>
+  </form>
+</section>
+<script type="text/javascript">
+  let newFlag = '@{model.flag.flag}';
+  let form = document.getElementById('form-flag');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    form.querySelector('div.error-wrapper span.error').innerHTML = '';
+    var url = form.getAttribute('data-url');
+    let body = {
+      flag: form.querySelector('input[name="flag"]').value,
+    };
+    fetch(url, {
+      method: 'POST',
+      body: JSON.stringify(body),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    }).then(async function (res) {
+      if (res.status != 200) {
+        form.querySelector('div.error-wrapper span.error').innerHTML = 'Error';
+        console.error(res);
+        return;
+      }
+      res = await res.json();
+      showSuccessMessage(res.value.msg);
+    }).catch(function (err) {
+      console.error(err);
+    });
+  });
+</script>

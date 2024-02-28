@@ -1,0 +1,246 @@
+@{title('GenHero | by Hackalotl')}
+<style media="screen">
+  ul {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+  }
+
+  li {
+    cursor: pointer;
+    margin-right: 20px;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+  }
+  li.active-tab {
+     background-color: #5bc0de;
+   }
+
+  .tab-content {
+    display: none;
+  }
+
+  .active-tab {
+    display: block;
+  }
+
+  .modal {
+    display: none;
+    position: fixed;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #1f1f1f;
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+  }
+
+  .modal-content {
+    text-align: left;
+  }
+
+  .close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .log-entries-wrapper {
+    max-width: 600px;
+    margin: 20px auto;
+  }
+
+  .entry {
+    background-color: #e6e6e6;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 15px;
+  }
+
+  .entry h3 {
+    background-color: #d9534f;
+    color: #fff;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 10px;
+    margin: 0;
+  }
+
+  .entry p {
+    margin: 0;
+  }
+
+  .entry-details {
+    color: #777;
+    font-size: 12px;
+    margin-top: 5px;
+  }
+</style>
+<section>
+  <ul>
+    <li id="superheroTabLi" onclick="changeTab('superheroTab')">Generador de Superheroes</li>
+    @{if user}
+    <li id="superheroeLogLi" onclick="changeTab('superheroeLog')">Bitacora de la Intergaláctica de Superheroes</li>
+    <li id="superheroeCookieLi" onclick="changeTab('superheroeCookie')">Come las super galletas</li>
+    @{fi}
+  </ul>
+  <div id="superheroTab" class="tab-content active-tab">
+    @{view('generator', model)}
+  </div>
+  @{if user}
+  <div id="superheroeLog" class="tab-content">
+    @{view('bitacora')}
+  </div>
+  <div id="superheroeCookie" class="tab-content">
+    @{view('cookie-eater')}
+  </div>
+  @{fi}
+</section>
+<p class="superhero-quote">"Con gran poder, viene una gran responsabilidad."</p>
+<p class="superhero-quote">"Hack The World"</p>
+
+
+<script type="text/javascript">
+  function changeTab(tabId) {
+    let tabs = document.querySelectorAll('.tab-content');
+    tabs.forEach(function (tab) {
+      tab.classList.remove('active-tab');
+    });
+
+    var tabListItems = document.querySelectorAll('ul li');
+    tabListItems.forEach(function (item) {
+      item.classList.remove('active-tab');
+    });
+
+    // Agregar la clase 'active-tab' al tab seleccionado
+    document.getElementById(tabId).classList.add('active-tab');
+    // Agregar la clase 'active-tab' al elemento li correspondiente
+    var selectedTabListItem = document.querySelector('ul li#' + tabId+'Li');
+    if (selectedTabListItem) {
+      selectedTabListItem.classList.add('active-tab');
+    }
+
+  }
+
+  function createLog(log){
+    let entryDiv = document.createElement('div');
+    entryDiv.className = 'entry';
+
+    let titleElement = document.createElement('h3');
+    titleElement.textContent = log.title;
+    entryDiv.appendChild(titleElement);
+
+    let bodyElement = document.createElement('p');
+    bodyElement.textContent = log.body;
+    entryDiv.appendChild(bodyElement);
+
+    let detailsElement = document.createElement('div');
+    detailsElement.className = 'entry-details';
+    detailsElement.textContent = 'Creation Date: ' + log.created + ' | Creator: ' + log?.username;
+    entryDiv.appendChild(detailsElement);
+    document.querySelector('.log-entries-wrapper').appendChild(entryDiv);
+  }
+
+  function getLogs(){
+    fetch('/api/posts').then(async (res) => {
+      if (res.status !== 200) return console.error(res);
+      let data = await res.json();
+      for (var i = 0; i < data.value.items.length; i++) {
+        createLog(data.value.items[i]);
+      }
+    }).catch(err => console.error(err));
+  }
+  getLogs();
+
+  function getDate(){
+    let currentDate = new Date();
+
+    let year = currentDate.getFullYear();
+    let month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
+    let day = currentDate.getDate().toString().padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+
+  }
+
+  let modalForms = document.querySelectorAll('.modal-form');
+  modalForms.forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      form.querySelector('div.error-wrapper span.error').innerHTML = '';
+      var url = form.getAttribute('data-url');
+      let body = {
+        title: form.querySelector('input[name="title"]').value,
+        body: form.querySelector('textarea').value
+      };
+      fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(body),
+        headers: {
+          'Content-type': 'application/json; charset=UTF-8'
+        }
+      }).then(async function (res) {
+        if (res.status != 200) {
+          form.querySelector('div.error-wrapper span.error').innerHTML = 'Error';
+          console.error(res);
+          return;
+        }
+        res = await res.json();
+        showSuccessMessage(res.value.msg);
+        body.username = "@{user?.usernmae}";
+        body.created = getDate();
+        createLog(body);
+        form.closest('.modal-content').querySelector('.close').click();
+      }).catch(function (err) {
+        console.error(err);
+      });
+
+    });
+  });
+
+  document.getElementById('superheroeGenerator').addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch('/', {
+      method: 'POST',
+      body: JSON.stringify({superheroeName: document.getElementById('superheroeName').value}),
+      headers: {"Content-type": "application/json; charset=UTF-8"}
+    }).then(async function(res) {
+      if (res.status != 200) {
+        console.error(res);
+        return;
+      }
+      res = await res.json();
+      showSuccessMessage('Superheroe Creado');
+      document.body.querySelector('.wrapper-1 h2').innerText = res.superheroeName;
+      document.body.querySelector('.wrapper-1').style.display = '';
+      document.getElementById('superheroeName').value = '';
+    }).catch(function(err) {
+      console.error(err);
+    });
+  });
+  document.getElementById('saveGenerator').addEventListener('click', function(){
+    document.getElementsByClassName('wrapper-2')[0].innerHTML = '';
+    localStorage.setItem('superheroeName', document.getElementById('saveNameGenerator').value);
+    showSuccessMessage('Nombre de Superheroe Creado');
+    document.getElementById('saveNameGenerator').value = '';
+  });
+  document.getElementById('showSavedName').addEventListener('click', function(e) {
+    let name = localStorage.getItem('superheroeName');
+    document.querySelector('.wrapper-2').innerText = name;
+  })
+
+
+</script>

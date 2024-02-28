@@ -1,0 +1,50 @@
+@{title('404 No Se Encuentra El SuperPoder')}
+<style media="screen">
+  h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    color: #d9534f;
+  }
+  p {
+    text-align: 'center';
+  }
+  a {
+    color: #5bc0de;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+  img {
+    width: 100%;
+    max-width: 450px;
+    border-radius: 50%;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    margin-bottom: 20px;
+    height: auto;
+    position: relative;
+    display: block;
+    margin: 0 auto;
+  }
+
+  .error-text {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 5em;
+    font-weight: bold;
+    color: #d9534f;
+    mix-blend-mode: difference; /* Adjust the contrast using mix-blend-mode */
+  }
+</style>
+<section>
+  <h1>Error 404</h1>
+  <img src="/error.jpeg" alt="Error in the screen">
+  <div class="error-text">ERROR</div>
+  <p>Lo sentimos, el superpoder o superheroe no fue encontrado en la Base de Datos Intergaláctica de superhéroes.</p>
+  <p>Por favor, regresa a la <a href="/">página de inicio de superhéroes</a> o verifica la URL.</p>
+
+</section>

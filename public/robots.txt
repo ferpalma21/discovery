@@ -1,0 +1,13 @@
+User-agent: *
+Disallow: /obscure
+Disallow: /admin
+Disallow: /admin/login
+Disallow: /api/
+Disallow: /api/v1
+Disallow: /api/v1/flag
+Disallow: /api/v2
+Disallow: /api/v2/flag
+Disallow: /app/vitals
+Disallow: /flags
+Disallow: /secure/
+Disallow: /secure/hosts

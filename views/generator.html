@@ -1,0 +1,31 @@
+<h1>Generador de Superheroes</h1>
+<h2>Bienvenido al GenHero La nueva tecnología alienigena para crear superheroes</h2>
+<p>
+  Descubre el poder que hay dentro de tu query superpower y úsalo para hacer el bien en el mundo...
+</p>
+<img src="/superheroegeek.jpg" alt="Superhéroe" class="superhero-image">
+<br>
+@{if model?.superpower}
+  Tu super poder es <br> <h2>@{model.superpower}</h2>
+@{fi}
+<br>
+<h2 id="nameId">¿Cuál es tu nombre de superheroe?</h2>
+<form id="superheroeGenerator" class="" method="post">
+  <input id="superheroeName"  type="text" placeholder="SuperPOST" name="superheroeName" value="">
+  <br>
+  <input id="submitFormHeroeName" type="submit" name="Crear" value="Crear">
+</form>
+
+<div class="wrapper-1" style="display:none;">
+  Bienvenido <br> <h2> </h2>
+</div>
+<br><br><br>
+<form class="" action="index.html" method="post">
+  <input id="saveNameGenerator" placeholder="@(SuperLOCAL)" type="text" name="" value="">
+  <button type="button" name="button" id="saveGenerator">Guardar Nombre de Superheroe</button>
+</form>
+<br>
+<button type="button" name="button" id="showSavedName">Mostrar Nombre de Superheroe</button>
+<div class="wrapper-2">
+
+</div>

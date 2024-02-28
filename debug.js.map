@@ -1,0 +1,84 @@
+{
+	"routes": [
+		{
+			"method": "POST",
+			"url": "/api/v1/flag/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "POST",
+			"url": "/api/posts/",
+			"owner": "controller_default",
+			"schema": "Posts",
+			"input": "_id:string,userid:string,title:string,body:string,email:string"
+		},
+		{
+			"method": "POST",
+			"url": "/admin/login/",
+			"owner": "controller_default",
+			"schema": "Users",
+			"input": "_id:string,email:string,*username:string,*password:string,role:string"
+		},
+		{
+			"method": "POST",
+			"url": "/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "POST",
+			"url": "/login/",
+			"owner": "controller_default",
+			"schema": "Users",
+			"input": "_id:string,email:string,*username:string,*password:string,role:string"
+		},
+		{
+			"method": "POST",
+			"url": "/sign-up/",
+			"owner": "controller_default",
+			"schema": "Users",
+			"input": "_id:string,email:string,*username:string,*password:string,role:string"
+		},
+		{
+			"method": "GET",
+			"url": "/api/posts/",
+			"owner": "controller_default",
+			"schema": "Posts"
+		},
+		{
+			"method": "GET",
+			"url": "/admin/login/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "GET",
+			"url": "/secure/hosts/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "GET",
+			"url": "/app/vitals/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "GET",
+			"url": "/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "GET",
+			"url": "/logout/",
+			"owner": "controller_default",
+			"schema": "Users"
+		},
+		{
+			"method": "GET",
+			"url": "/flags/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "GET",
+			"url": "/secure/",
+			"owner": "controller_default"
+		}
+	]
+}

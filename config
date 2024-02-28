@@ -1,0 +1,5 @@
+userWebAppCookie                : __ck_usr_opts
+cookie                          : __sh_user_website
+cookie_secret                   : superHeroeCookie
+cookie_time                     : 15 minutes
+secret                          : heroeCookie

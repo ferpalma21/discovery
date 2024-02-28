@@ -1,0 +1,25 @@
+@{if user && user.username}
+<h1>Bitacora Intergaláctica</h1>
+<div class="log-entries">
+  <h2>Todos los logs de todos los usuarios</h2>
+  <p>Seguro no es peligroso</p>
+  <div class="log-entries-wrapper">
+
+  </div>
+</div>
+<button onclick="openModal('blogModal')">Agregar Entrada</button>
+<div id="blogModal" class="modal">
+  <div class="modal-content">
+    <span class="close" onclick="closeModal('blogModal')">&times;</span>
+    <h2>Crear Entrada de @{user?.username}</h2>
+    <form class="modal-form" data-url="/api/posts">
+      <input type="text" placeholder="un titulo para tu entrada" name="title" value="">
+      <textarea name="body" rows="8" cols="80" placeholder="¿Relata lo que pasó?"></textarea>
+      <button type="submit">Publicar</button>
+      <div class="error-wrapper">
+        <span class="error"></span>
+      </div>
+    </form>
+  </div>
+</div>
+@{fi}

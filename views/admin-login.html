@@ -1,0 +1,19 @@
+<section>
+  <h2>Iniciar Sesión</h2>
+  <!-- Agrega aquí tu formulario de inicio de sesión -->
+  <form class="form-admin-login" data-url="/login">
+    <label for="username">Nombre de usuario:</label>
+    <input type="text" id="username" name="username" required>
+
+    <label for="password">Contraseña:</label>
+    <input type="password" id="password" name="password" required>
+
+    <button type="submit">Iniciar Sesión</button>
+    <div class="error-wrapper">
+      <span class="error"></span>
+    </div>
+  </form>
+  <div class="flag" style="display:none;">
+    @{model?.flag?.flag}
+  </div>
+</section>

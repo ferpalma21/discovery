@@ -1,0 +1,14 @@
+{
+  "name": "discovery2",
+  "version": "1.0.0",
+  "description": "a small exercise to try discovery tools",
+  "main": "debug.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "total4": "^0.0.95"
+  }
+}
