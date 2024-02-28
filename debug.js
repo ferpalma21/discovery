@@ -1,7 +1,7 @@
 
 const options = {};
 
-options.port = parseInt(process.argv[2]) || 5000;
+options.port = parseInt(process.argv[2]) || 5007;
 
 var type = process.argv.indexOf('--release', 1) !== -1 || process.argv.indexOf('release', 1) !== -1 ? 'release' : 'debug';
 // type = 'debug'
