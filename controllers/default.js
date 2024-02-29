@@ -38,7 +38,7 @@ function view_users(){
       checkDB.where('action', 'GET-USERS').callback((err, res) => {
         if (res) return self.view('check-users', {users: users});
         let db = NOSQL('flags').one();
-        db.where('action', 'GET-SECURE');
+        db.where('action', 'GET-USERS');
         db.where('sent', false);
         db.where('used', false).callback((err, flag) => {
           return self.view('check-users', {users:users.items, flag: flag});
