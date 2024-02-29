@@ -2,7 +2,13 @@
 	"routes": [
 		{
 			"method": "POST",
-			"url": "/api/v1/flag/",
+			"url": "/api/v2/flag/",
+			"owner": "controller_default"
+		},
+		{
+			"method": "GET",
+			"url": "/users/",
+			"auth": 1,
 			"owner": "controller_default"
 		},
 		{
@@ -14,7 +20,7 @@
 		},
 		{
 			"method": "POST",
-			"url": "/admin/login/",
+			"url": "/sysadmin/login/",
 			"owner": "controller_default",
 			"schema": "Users",
 			"input": "_id:string,email:string,*username:string,*password:string,role:string"
@@ -46,12 +52,12 @@
 		},
 		{
 			"method": "GET",
-			"url": "/admin/login/",
+			"url": "/sysadmin/login/",
 			"owner": "controller_default"
 		},
 		{
 			"method": "GET",
-			"url": "/secure/hosts/",
+			"url": "/security/hosts/",
 			"owner": "controller_default"
 		},
 		{
@@ -77,7 +83,7 @@
 		},
 		{
 			"method": "GET",
-			"url": "/secure/",
+			"url": "/security/",
 			"owner": "controller_default"
 		}
 	]

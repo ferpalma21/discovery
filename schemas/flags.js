@@ -20,7 +20,7 @@ setTimeout(()=>{
   let db = NOSQL('flags');
   db.find().where('used', false).callback((err,flags)=>{
     if (flags.length > 0) return
-    for (var i = 0; i < 140; i++) {
+    for (var i = 0; i < 160; i++) {
       let flag = FAKE('flags')
       flag.used = false;
       flag.sent = false;
@@ -33,6 +33,7 @@ setTimeout(()=>{
       else if (i < 100) flag.action = 'GET-SECURE';
       else if (i < 120) flag.action = 'GET-SECURE-HOSTS';
       else if (i <= 140) flag.action = 'GET-APP-VITALS';
+      else if (i <= 160) flag.action = 'GET-USERS';
       db.insert(flag)
     }
   });

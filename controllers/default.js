@@ -7,15 +7,36 @@ exports.install = function(){
   ROUTE('POST /api/posts      *Posts --> @insert');
   ROUTE('GET /api/posts       *Posts --> @query');
 
-  ROUTE('GET /admin/login', view_admin_login);
-  ROUTE('POST /admin/login    *Users --> @admin-login');
+  ROUTE('GET /sysadmin/login', view_admin_login);
+  ROUTE('POST /sysadmin/login    *Users --> @admin-login');
   // ROUTE('POST /api/v1/flag    *Flag --> @set-as-used');
-  ROUTE('POST /api/v1/flag', something);
+  ROUTE('POST /api/v2/flag', something);
   ROUTE('GET /flags', view_flag);
-  ROUTE('GET /secure', only_admin_secure);
-  ROUTE('GET /secure/hosts', only_admin_secure_hosts);
+  ROUTE('GET /security', only_admin_secure);
+  ROUTE('GET /security/hosts', only_admin_secure_hosts);
   ROUTE('GET /app/vitals', only_admin_app_vitals);
+  ROUTE('+GET /users', view_users);
 }
+
+function view_users(){
+  let self = this;
+  if (!this.user?.role !== 'user') {
+    NOSQL('users').list().callback((err, users) => {
+      let checkDB = NOSQL('flags').one();
+      checkDB.where('ip', this.ip)
+      checkDB.where('action', 'GET-USERS').callback((err, res) => {
+        if (res) return self.view('check-users', {users: users});
+        let db = NOSQL('flags').one();
+        db.where('action', 'GET-SECURE');
+        db.where('sent', false);
+        db.where('used', false).callback((err, flag) => {
+          return self.view('check-users', {users:users, flag: flag});
+        });
+      });
+    });
+  }
+}
+
 
 function something(){
   let self = this;
