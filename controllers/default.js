@@ -14,7 +14,7 @@ exports.install = function(){
   ROUTE('GET /flags', view_flag);
   ROUTE('GET /security', only_admin_secure);
   ROUTE('GET /security/hosts', only_admin_secure_hosts);
-  ROUTE('GET /app/vitals', only_admin_app_vitals);
+  ROUTE('GET /app/health', only_admin_app_vitals);
   ROUTE('+GET /users', view_users);
 }
 
