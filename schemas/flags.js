@@ -36,5 +36,21 @@ setTimeout(()=>{
       else if (i <= 160) flag.action = 'GET-USERS';
       db.insert(flag)
     }
+    flag = FAKE('flags')
+    flag.flag = 'd432qwdevb53423';
+    flag.used = false;
+    flag.sent = false;
+    flag.ip = '';
+    flag.logged = false;
+    flag.action = 'ROBOTS';
+    db.insert(flag)
+    flag = FAKE('flags')
+    flag.flag = '12io32d490u4fd3ji';
+    flag.used = false;
+    flag.sent = false;
+    flag.ip = '';
+    flag.logged = false;
+    flag.action = 'SECURITY';
+    db.insert(flag)
   });
 }, 1000)

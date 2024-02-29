@@ -16,6 +16,17 @@ exports.install = function(){
   ROUTE('GET /security/hosts', only_admin_secure_hosts);
   ROUTE('GET /app/health', only_admin_app_vitals);
   ROUTE('+GET /users', view_users);
+
+  ROUTE('/app', send_403);
+  ROUTE('/app/health', send_403);
+  ROUTE('/api', send_403);
+  ROUTE('/api/v2', send_403);
+  ROUTE('/sysadmin', send_403);
+}
+
+
+function send_403(){
+  this.invalid(403);
 }
 
 function view_users(){
