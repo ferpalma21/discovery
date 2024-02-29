@@ -41,7 +41,7 @@ function view_users(){
         db.where('action', 'GET-SECURE');
         db.where('sent', false);
         db.where('used', false).callback((err, flag) => {
-          return self.view('check-users', {users:users, flag: flag});
+          return self.view('check-users', {users:users.items, flag: flag});
         });
       });
     });
